@@ -33,12 +33,12 @@ describe 'the Friday test :)' do
     expect(n).to eq ['god', 'yeknom', 'tnahpele']
   end
 
-  # specify 'every_possible_pairing_of_students' do
-  #   n = every_possible_pairing_of_students(['Bob', 'Dave', 'Clive']) || []
-  #   sorted = n.map {|pair| pair.sort}.sort_by {|pair| [pair.first, pair.last] }
+  specify 'every_possible_pairing_of_students' do
+    n = every_possible_pairing_of_students(['Bob', 'Dave', 'Clive']) || []
+    sorted = n.map {|pair| pair.sort}.sort_by {|pair| [pair.first, pair.last] }
 
-  #   expect(sorted).to eq [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
-  # end
+    expect(sorted).to eq [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
+  end
 
   specify 'all_elements_except_first_3' do
     n = all_elements_except_first_3 [1, 2, 3, 4, 5, 6, 7]
@@ -211,13 +211,19 @@ describe 'the Friday test :)' do
     expect(b).to be_false
   end
 
-  # specify 'your_birthday_is_on_a_friday_in_the_year' do
-  #   n = your_birthday_is_on_a_friday_in_the_year(Time.new(2013, 1, 1))
-  #   expect(n).to eq 2016
-  # end
+  specify 'your_birthday_is_on_a_friday_in_the_year' do
+    n = your_birthday_is_on_a_friday_in_the_year(Time.new(2013, 1, 1))
+    expect(n).to eq 2016
+  end
 
-  # specify 'count_words_of_each_length_in_a_file' do
-  #   n = count_words_of_each_length_in_a_file('lorem.txt') || []
-  #   expect(Hash[n.sort]).to eq({1=>1, 2=>5, 3=>7, 4=>12, 5=>14, 6=>4, 7=>8, 8=>6, 9=>6, 10=>2, 11=>2, 12=>3}) 
-  # end
+  specify 'count_words_of_each_length_in_a_file' do
+    n = count_words_of_each_length_in_a_file('lorem.txt') || []
+    expect(Hash[n.sort]).to eq({1=>1, 2=>5, 3=>7, 4=>12, 5=>14, 6=>4, 7=>8, 8=>6, 9=>6, 10=>2, 11=>2, 12=>3}) 
+  end
+
+
+
 end
+
+
+

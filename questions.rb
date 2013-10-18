@@ -15,7 +15,7 @@ end
 
 # remove instances of nil AND false from an array
 def remove_nils_and_false_from_array(array)
-		array.delete_if { |e| e == nil || e == false}
+	array.select { |element| element }
 end
 
 # don't reverse the array, but reverse every word inside it. e.g.
@@ -29,12 +29,13 @@ end
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
 # make sure you don't have the same pairing twice, 
 def every_possible_pairing_of_students(array)
+  array.combination(2).to_a
 end
 
 # discard the first 3 elements of an array, 
 # e.g. [1, 2, 3, 4, 5, 6] becomes [4, 5, 6]
 def all_elements_except_first_3(array)
-	array - [array[0]] - [array[1]] - [array [2]]
+	array.drop(3)
 end
 
 # add an element to the beginning of an array
@@ -45,12 +46,7 @@ end
 # sort an array of words by their last letter, e.g.
 # ['sky', 'puma', 'maker'] becomes ['puma', 'maker', 'sky']
 def array_sort_by_last_letter_of_word(array)
-	array_with_last_letter = array.map {|word| [word, word[word.length-1]]}
-	transfer_to_hash = array_with_last_letter.inject({}) do |x, y|
-  			x.merge!({y[0] => y[1]})
-	end
-	sorting_by_key = transfer_to_hash.sort_by {|k,v| v}
-	ordered_words = sorting_by_key.flatten.delete_if {|e| e.count('a-z') == 1}
+	array.sort { |x, y| x.chars.last <=> y.chars.last }
 end
 
 # cut strings in half, and return the first half, e.g.
@@ -102,9 +98,7 @@ end
 # add up all the numbers in an array, so [1, 3, 5, 6]
 # returns 15
 def total_of_array(array)
-	total = 0
-	array.each { |number| total += number }
-	total
+	array.inject(:+)
 end
 
 # turn an array into itself repeated twice. So [1, 2, 3]
@@ -123,7 +117,7 @@ end
 def average_of_array(array)
 	total = 0
 	array.each { |e| total += e}
-	 (total.to_f / array.length).ceil
+	(total.to_f / array.length).ceil
 end
 
 # get all the elements in an array, up until the first element
@@ -171,10 +165,7 @@ end
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
-	a = string.sub!(/[A-Z]+/, '')
-	a = string.sub!(/[A-Z]+/, '')
-	a = string.sub!(/[A-Z]+/, '')
-	# FIGURE OUT THE PROBLEM
+	a = string.gsub(/[A-Z]+/, '')
 end
 
 # round up a float up and convert it to an Integer,
@@ -247,9 +238,9 @@ end
 
 # count the number of words in a file
 def word_count_a_file(file_path)
-	file = File.open(file_path)
-	text = file.read
+	file = File.open(file_path).read
 	text.split(' ').count
+	hash.values_at(*text.uniq)
 end
 
 # --- tougher ones ---
@@ -258,13 +249,22 @@ end
 # called call_method_from_string('foobar')
 # the method foobar should be invoked
 def call_method_from_string(str_method)
-	'asdasd'.str_method
+	String.str_method
 end
 
 # return true if the date is a uk bank holiday for 2014
 # the list of bank holidays is here:
 # https://www.gov.uk/bank-holidays
 def is_a_2014_bank_holiday?(date)
+	bank_holidays = [Time.new(2014,1,1),
+					 Time.new(2014,4,18),
+					 Time.new(2014,4,21),
+					 Time.new(2014,5,5),
+					 Time.new(2014,5,26),
+					 Time.new(2014,8,25),
+					 Time.new(2014,12,25),
+					 Time.new(2014,12,26)]
+	bank_holidays.include?(date)
 end
 
 # given your birthday this year, this method tells you
@@ -272,6 +272,10 @@ end
 # e.g. january 1st, will next be a friday in 2016
 # return the day as a capitalized string like 'Friday'
 def your_birthday_is_on_a_friday_in_the_year(birthday)
+	until birthday.friday?
+		birthday += (365 * 24 * 60 * 60)
+	end
+	birthday.year
 end
 
 # in a file, total the number of times words of different lengths
@@ -280,6 +284,12 @@ end
 # and 1 that is 4 letters long. Return it as a hash in the format
 # word_length => count, e.g. {2 => 1, 3 => 5, 4 => 1}
 def count_words_of_each_length_in_a_file(file_path)
+	file = File.open(file_path).read
+	text = text.split(' ')
+	text = text.map { |word| word.gsub(/\W/, '') }
+	text = text.map {|word| word = word.chars.count}
+	hash = Hash.new {|hash,key| [key, text.count(key)] }
+	hash.values_at(*text.uniq)
 end
 
 # implement fizzbuzz without modulo, i.e. the % method
