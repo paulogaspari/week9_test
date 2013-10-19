@@ -221,7 +221,21 @@ describe 'the Friday test :)' do
     expect(Hash[n.sort]).to eq({1=>1, 2=>5, 3=>7, 4=>12, 5=>14, 6=>4, 7=>8, 8=>6, 9=>6, 10=>2, 11=>2, 12=>3}) 
   end
 
+  specify 'fizzbuzz' do
+    a = fizzbuzz_without_modulo(3)
+    b = fizzbuzz_without_modulo(5)
+    c = fizzbuzz_without_modulo(15)
+    d = fizzbuzz_without_modulo(17)
+    expect(a).to eq('fizz')
+    expect(b).to eq('buzz')
+    expect(c).to eq('fizzbuzz')
+    expect(d).to eq('17')
+  end
 
+  specify 'ninety_nine_bottles_of_beer' do
+    n = ninety_nine_bottles_of_beer
+    expect(n).to eq(0)
+  end
 
 end
 
